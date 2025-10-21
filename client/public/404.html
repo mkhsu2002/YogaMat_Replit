@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>重新導向中...</title>
+    <script>
+      // GitHub Pages 單頁應用的 404 處理
+      // 將當前 URL 保存到 sessionStorage，然後重定向到首頁
+      sessionStorage.setItem('redirect', location.href);
+    </script>
+    <meta http-equiv="refresh" content="0;URL='/'">
+  </head>
+  <body>
+    <p>正在重新導向...</p>
+  </body>
+</html>

@@ -193,26 +193,43 @@ See `design_guidelines.md` for complete design system.
 
 ## Deployment
 
-### GitHub Pages Ready
-All files configured for GitHub Pages deployment:
-- ✅ robots.txt
-- ✅ sitemap.xml
-- ✅ .nojekyll file
-- ✅ Complete DEPLOYMENT.md guide
+### GitHub Pages Ready ✅
+All files configured for GitHub Pages deployment with **404 error fixed**:
+- ✅ robots.txt, sitemap.xml, .nojekyll
+- ✅ 404.html for SPA routing support
+- ✅ Auto-build script (`scripts/build-gh-pages.js`)
+- ✅ GitHub Actions workflow (`.github/workflows/deploy.yml`)
+- ✅ Complete deployment guides
+
+### SPA Routing Fix
+Fixed the common GitHub Pages 404 error for single-page apps:
+- `client/public/404.html` - Redirects to index.html
+- `client/index.html` - Restores original URL using sessionStorage
+- `scripts/build-gh-pages.js` - Copies index.html to 404.html during build
 
 ### To Deploy:
 1. Push to GitHub repository
-2. Enable GitHub Actions in repository settings
-3. Create `.github/workflows/deploy.yml` (see DEPLOYMENT.md)
-4. GitHub Actions will build and deploy automatically
+   ```bash
+   git push origin main
+   ```
+2. Enable GitHub Pages in repository settings
+3. Select **GitHub Actions** as deployment source
+4. Workflow automatically builds and deploys
+5. Site will be live at `https://<username>.github.io/<repo-name>/`
+
+### Files in client/public/
+- `404.html` - GitHub Pages 404 handler
+- `robots.txt` - SEO crawler config
+- `sitemap.xml` - Site structure
+- `.nojekyll` - Disable Jekyll processing
 
 ### Custom Domain (Optional)
 To use `yoga.icareu.tw`:
-1. Add CNAME record in DNS settings
-2. Create `public/CNAME` file with domain
+1. Create `client/public/CNAME` with domain
+2. Add DNS CNAME record pointing to `<username>.github.io`
 3. Configure in GitHub Pages settings
 
-See `DEPLOYMENT.md` for detailed instructions.
+See `部署到GitHub_Pages.md` or `GITHUB_PAGES_SETUP.md` for detailed instructions.
 
 ## Testing
 

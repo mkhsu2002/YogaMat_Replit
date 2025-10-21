@@ -2,6 +2,10 @@
 
 這個專案已經完整配置好，可以直接部署到 GitHub Pages。
 
+## ✅ 404 問題已修復
+
+專案已包含完整的 SPA (單頁應用) 支援，解決了 GitHub Pages 的 404 錯誤問題。
+
 ## 部署步驟
 
 ### 1. 推送到 GitHub
@@ -22,66 +26,15 @@ git push -u origin main
 3. 在左側選單找到 **Pages**
 4. 在 **Build and deployment** 區域：
    - Source: 選擇 **GitHub Actions**
-5. 創建以下 workflow 文件
+5. Workflow 文件已經在 `.github/workflows/deploy.yml`
 
-### 3. 創建 GitHub Actions Workflow
+### 3. 自動部署
 
-在你的 repository 創建文件 `.github/workflows/deploy.yml`：
-
-```yaml
-name: Deploy to GitHub Pages
-
-on:
-  push:
-    branches: [ main ]
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-      
-      - name: Install dependencies
-        run: npm ci
-      
-      - name: Build
-        run: npm run build
-        env:
-          NODE_ENV: production
-      
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./dist
-
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-```
+GitHub Actions workflow 已經包含在專案中（`.github/workflows/deploy.yml`），會自動：
+1. 構建專案
+2. 運行 `scripts/build-gh-pages.js` 準備部署文件
+3. 將 index.html 複製為 404.html
+4. 部署到 GitHub Pages
 
 ### 4. 自訂域名（選擇性）
 
